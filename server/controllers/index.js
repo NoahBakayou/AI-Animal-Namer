@@ -14,11 +14,16 @@ exports.getAllAnimals = (req, res, next) => {
    exports.createAnimal = (req, res, next) => {
     if (!req.body) return next(new AppError("No form data found", 404));
     const values = [req.body.name, "pending"];
+    const query = `INSERT INTO animals (name, status) VALUES('${req.body.name}', 'pending')`;
+
     conn.query(
-      "INSERT INTO animals (name, status) VALUES(?)",
-      [values],
+      // "INSERT INTO animals (name, status) VALUES(?)",
+      // [values],
+      query,
       function (err, data, fields) {
-        if (err) return next(new AppError(err, 500));
+        if (err){
+          console.error(err);
+          return next(new AppError(err, 500));}
         res.status(201).json({
           status: "success",
           message: "Animal created!",

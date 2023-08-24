@@ -85,6 +85,7 @@ export default function App() {
           </li>
         ))}
       </ul>
+      <br />
       <button className="btn btn-danger" onClick={deleteAllAnimals}>
         Delete All Animals
       </button>
