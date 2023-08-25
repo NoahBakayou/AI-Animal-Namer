@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function App() {
-  const [newItem, setNewItem] = useState("");
+  const [newAnimal, setnewAnimal] = useState("");
   const [Animals, setAnimals] = useState([]);
 
   useEffect(() => {
@@ -22,14 +22,14 @@ export default function App() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (newItem.trim() === "") return;
+    if (newAnimal.trim() === "") return;
 
     try {
       const response = await axios.post("http://localhost:3000/", {
-        name: newItem
+        name: newAnimal
       });
 
-      setNewItem(""); // Clear the input field
+      setnewAnimal(""); // Clear the input field
       fetchAnimals(); // Fetch Animals again to refresh the list
     } catch (error) {
       console.error("Error adding animal:", error);
@@ -60,10 +60,10 @@ export default function App() {
     <>
       <form onSubmit={handleSubmit} className="new-item-form">
         <div className="form-row">
-          <label htmlFor="item"> New Item </label>
+          <label htmlFor="item"> New Animal </label>
           <input
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
+            value={newAnimal}
+            onChange={(e) => setnewAnimal(e.target.value)}
             type="text"
             id="item"
           />
