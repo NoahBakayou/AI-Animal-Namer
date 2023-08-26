@@ -24,6 +24,9 @@ export default function App() {
 
     if (newAnimal.trim() === "") return;
 
+    console.log("Sending animal name to backend:", newAnimal);
+
+
     try {
       const response = await axios.post("http://localhost:3000/", {
         name: newAnimal
@@ -58,7 +61,7 @@ export default function App() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="new-item-form">
+      <form onSubmit={handleSubmit} className="new-newAnima-form">
         <div className="form-row">
           <label htmlFor="item"> New Animal </label>
           <input
