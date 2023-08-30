@@ -52,10 +52,10 @@ body {
 .new-item-form input {
   outline: none;
   border: 1px solid hsl(200, 100%, 40%);
-  background: hsl(200, 100%, 30%);
+  background: hsl(199, 79%, 82%);
   border-radius: 0.25em;
   padding: 0.25em 0.5em;
-  color: hsl(200, 100%, 90%);
+  color: hsl(0, 0%, 0%);
 }
 
 .new-item-form input:focus {

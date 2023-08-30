@@ -5,7 +5,16 @@ const OpenAIApi = require("openai");
 // Initialize OpenAI with the API key from your environment variables
 const openai = new OpenAIApi({ apiKey: process.env.OPENAI_API_KEY });
 
-
+exports.getAllAnimalNames = (req, res, next) => {
+  conn.query("SELECT * FROM animalnames", function (err, data, fields) {
+    if(err) return next(new AppError(err))
+    res.status(200).json({
+      status: "success",
+      length: data?.length,
+      data: data,
+    });
+  });
+};
 exports.getAllAnimals = (req, res, next) => {
     conn.query("SELECT * FROM animals", function (err, data, fields) {
       if(err) return next(new AppError(err))
@@ -34,8 +43,23 @@ exports.getAllAnimals = (req, res, next) => {
         try {
           const completion = await openai.completions.create({
             model: "text-davinci-003",
-            prompt: `Suggest a name for a breed of the animal ${req.body.name}.`,
-            temperature: .3,
+            prompt: `Suggest one name for an animal that is a superhero.
+
+            Animal: Cat
+            Name: Captain Sharpclaw
+            Animal: Cat
+            Name: Agent Fluffball 
+            Animal: Cat
+            Name: The Incredible Feline
+            Animal: Dog
+            Names: Ruff the Protector
+            Animal: Dog
+            Name: Wonder Canine
+            Animal: Dog
+            Name: Sir Barks-a-Lot
+            Animal: ${req.body.name}
+            Name:`,
+            temperature: .7,
         });
         
         //console.log("OpenAI API response:", completion);
@@ -76,22 +100,7 @@ exports.getAllAnimals = (req, res, next) => {
       }
     );
    };
-   exports.updateAnimal = (req, res, next) => {
-    if (!req.params.id) {
-      return next(new AppError("No Animal id found", 404));
-    }
-    conn.query(
-      "UPDATE animals SET status='completed' WHERE id=?",
-      [req.params.id],
-      function (err, data, fields) {
-        if (err) return next(new AppError(err, 500));
-        res.status(201).json({
-          status: "success",
-          message: "Animal updated!",
-        });
-      }
-    );
-   };
+  
    exports.deleteAllAnimals = (req, res, next) => {
     conn.query("DELETE FROM animals", function (err, fields) {
       if (err) return next(new AppError(err, 500));
@@ -117,4 +126,19 @@ exports.getAllAnimals = (req, res, next) => {
       }
     );
    }
-
+   exports.deleteAnimalName = (req, res, next) => {
+    if (!req.params.id) {
+      return next(new AppError("No Animal Name id found", 404));
+    }
+    conn.query(
+      "DELETE FROM animalnames WHERE id=?",
+      [req.params.id],
+      function (err, fields) {
+        if (err) return next(new AppError(err, 500));
+        res.status(201).json({
+          status: "success",
+          message: "Animal Name deleted!",
+        });
+      }
+    );
+  };
