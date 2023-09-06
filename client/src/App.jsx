@@ -105,7 +105,7 @@ export default function App() {
         {AnimalNames.length === 0 && <p>No Generated Names</p>}
         {AnimalNames.map((animalName) => (
           <li key={animalName.id}>
-            {animalName.AnimalType}: {animalName.AnimalName}
+            {animalName.AnimalName}: {animalName.DateCreated}
             <button className="btn btn-danger" onClick={() => deleteAnimalName(animalName.id)}>Delete</button>
           </li>
         ))}
